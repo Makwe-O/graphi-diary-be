@@ -4,9 +4,10 @@
   "description": "GraphQl back-end server for dairy application",
   "main": "index.js",
   "scripts": {
-    "test": "nyc mocha --exit --timeout 100000 --require @babel/register ./src/__tests__/*",
     "dev": "nodemon --exec babel-node app.js",
-    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
+    "test": "nyc mocha --exit --timeout 100000 --require @babel/register ./src/__tests__/*",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "coverage": "npm run test && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
