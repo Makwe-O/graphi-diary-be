@@ -1,9 +1,14 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import dotenv from 'dotenv';
+import connectDb from './src/models';
 
+dotenv.config();
 const app = express();
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ type: 'application/json' }));
 
 app.get('/', (request, response) => {
   response.status(200).json({
@@ -19,9 +24,15 @@ app.all('*', (request, response) => {
   });
 });
 
-app.listen(4000, () => {
-  // eslint-disable-next-line
-  console.log('app is listening to port 4000');
-});
+connectDb()
+  .then(async () => {
+    if (!module.parent) {
+      app.listen(4000, () => {
+        // eslint-disable-next-line
+        console.log('app is listening to port 4000');
+      });
+    }
+  })
+  .catch(err => console.log('Something bad happened', err));
 
 export default app;
