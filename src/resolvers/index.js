@@ -23,7 +23,7 @@ const incidentData = [
   {
     id: '112',
     createdAt: '23-33-22',
-    CreatedBy: userData[1],
+    createdBy: userData[1],
     type: 'INCIDENT',
     location: 'lagos',
     status: 'PENDING',
