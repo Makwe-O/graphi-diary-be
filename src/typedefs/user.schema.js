@@ -14,8 +14,7 @@ const User = gql`
 
   type Query {
     users(query: String): [User!]!
-    user(username: String!): User
-    greeting(name: String): String!
+    user(username: String!): User!
   }
 `;
 

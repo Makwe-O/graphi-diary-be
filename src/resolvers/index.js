@@ -66,7 +66,6 @@ const resolvers = {
       if (result) {
         return result;
       }
-      return 'No';
     },
 
     incidents: () => incidentData,
