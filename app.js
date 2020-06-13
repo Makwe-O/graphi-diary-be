@@ -42,7 +42,7 @@ import { makeExecutableSchema } from 'graphql-tools';
 import typeDefs from './src/typedefs';
 import resolvers from './src/resolvers';
 
-export const schema = makeExecutableSchema({
+const schema = makeExecutableSchema({
   typeDefs,
   resolvers,
 });

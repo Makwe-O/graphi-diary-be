@@ -16,7 +16,7 @@ const Incident = gql`
   type Incident {
     id: ID!
     createdAt: String!
-    CreatedBy: User!
+    createdBy: User!
     type: IncidentType!
     location: String!
     status: Status!
