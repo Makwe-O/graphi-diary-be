@@ -68,7 +68,19 @@ const resolvers = {
       }
     },
 
-    incidents: () => incidentData,
+    incidents: (parent, args, context, info) => {
+      if (!args.query) {
+        return incidentData;
+      }
+      return incidentData.filter((incident) =>
+        incident.comment
+          .toLocaleLowerCase()
+          .includes(args.query.toLocaleLowerCase()),
+      );
+    },
+    incident: (parent, args, context, info) => {
+      return incidentData.find((incident) => incident.id === args.id);
+    },
   },
 
   Incident: {

@@ -24,7 +24,8 @@ const Incident = gql`
   }
 
   extend type Query {
-    incidents: [Incident]!
+    incidents(query: String): [Incident]!
+    incident(id: ID!): Incident!
   }
 `;
 
