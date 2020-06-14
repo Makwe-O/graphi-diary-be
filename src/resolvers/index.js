@@ -102,6 +102,20 @@ const resolvers = {
       userData.push(user);
       return user;
     },
+
+    createIncident: (parent, args, ctx, info) => {
+      const incident = {
+        id: uuidv4(),
+        createdAt: '23-01-2020',
+        createdBy: args.createdBy,
+        type: args.type,
+        location: args.location,
+        comment: args.comment,
+        status: args.status || '',
+      };
+      incidentData.push(incident);
+      return incident;
+    },
   },
 
   Incident: {
