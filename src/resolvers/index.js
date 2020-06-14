@@ -85,19 +85,17 @@ const resolvers = {
   },
   Mutation: {
     createUser: (parent, args, context, info) => {
-      const isEmailTaken = userData.some((user) => user.email === args.email);
+      const isEmailTaken = userData.some(
+        (user) => user.email === args.data.email,
+      );
       console.log(isEmailTaken);
       if (isEmailTaken) {
         throw new Error('Email already exists');
       }
       const user = {
         id: uuidv4(),
-        firstname: args.firstname || '',
-        lastname: args.lastname || '',
-        email: args.email,
-        username: args.username,
-        phonenumber: args.phonenumber || '',
         isAdmin: false,
+        ...args.data,
       };
       userData.push(user);
       return user;
@@ -106,12 +104,7 @@ const resolvers = {
     createIncident: (parent, args, ctx, info) => {
       const incident = {
         id: uuidv4(),
-        createdAt: '23-01-2020',
-        createdBy: args.createdBy,
-        type: args.type,
-        location: args.location,
-        comment: args.comment,
-        status: args.status || '',
+        ...args.data,
       };
       incidentData.push(incident);
       return incident;

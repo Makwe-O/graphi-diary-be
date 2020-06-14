@@ -18,13 +18,15 @@ const User = gql`
   }
 
   type Mutation {
-    createUser(
-      firstname: String
-      lastname: String
-      username: String!
-      email: String!
-      phonenumber: String
-    ): User!
+    createUser(data: CreateUserInput): User!
+  }
+
+  input CreateUserInput {
+    firstname: String!
+    lastname: String!
+    username: String!
+    email: String!
+    phonenumber: String
   }
 `;
 
