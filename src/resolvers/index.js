@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-const userData = [
+let userData = [
   {
     id: '234',
     firstname: 'Mmakwe',
@@ -20,7 +20,7 @@ const userData = [
   },
 ];
 
-const incidentData = [
+let incidentData = [
   {
     id: '112',
     createdAt: '23-33-22',
@@ -108,6 +108,20 @@ const resolvers = {
       };
       incidentData.push(incident);
       return incident;
+    },
+
+    deleteIncident: (parent, args, ctx, info) => {
+      const isIncidentexist = incidentData.find(
+        (incident) => incident.id === args.id,
+      );
+      if (!isIncidentexist) {
+        throw new Error('This incident does not exist');
+      }
+      const updateIncidentData = incidentData.filter(
+        (incident) => incident.id !== args.id,
+      );
+      incidentData = updateIncidentData;
+      return incidentData;
     },
   },
 

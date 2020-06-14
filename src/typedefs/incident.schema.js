@@ -29,6 +29,7 @@ const Incident = gql`
   }
   extend type Mutation {
     createIncident(data: CreateIncidentInput): Incident!
+    deleteIncident(id: ID!): [Incident]!
   }
   input CreateIncidentInput {
     type: String!
