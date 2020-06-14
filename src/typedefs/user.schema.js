@@ -19,6 +19,7 @@ const User = gql`
 
   type Mutation {
     createUser(data: CreateUserInput): User!
+    deleteUser(id: ID!): [User]!
   }
 
   input CreateUserInput {

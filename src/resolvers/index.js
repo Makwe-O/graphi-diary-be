@@ -101,6 +101,16 @@ const resolvers = {
       return user;
     },
 
+    deleteUser: (parent, args, ctx, info) => {
+      const isUserExist = userData.find((user) => user.id === args.id);
+      if (!isUserExist) {
+        throw new Error('User not found');
+      }
+      const updateUserData = userData.filter((user) => user.id !== args.id);
+      userData = updateUserData;
+      return userData;
+    },
+
     createIncident: (parent, args, ctx, info) => {
       const incident = {
         id: uuidv4(),
