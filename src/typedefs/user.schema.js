@@ -16,6 +16,16 @@ const User = gql`
     users(query: String): [User!]!
     user(username: String!): User!
   }
+
+  type Mutation {
+    createUser(
+      firstname: String
+      lastname: String
+      username: String!
+      email: String!
+      phonenumber: String
+    ): User!
+  }
 `;
 
 export default User;

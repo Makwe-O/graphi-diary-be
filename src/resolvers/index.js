@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 const userData = [
   {
     id: '234',
@@ -80,6 +81,26 @@ const resolvers = {
     },
     incident: (parent, args, context, info) => {
       return incidentData.find((incident) => incident.id === args.id);
+    },
+  },
+  Mutation: {
+    createUser: (parent, args, context, info) => {
+      const isEmailTaken = userData.some((user) => user.email === args.email);
+      console.log(isEmailTaken);
+      if (isEmailTaken) {
+        throw new Error('Email already exists');
+      }
+      const user = {
+        id: uuidv4(),
+        firstname: args.firstname || '',
+        lastname: args.lastname || '',
+        email: args.email,
+        username: args.username,
+        phonenumber: args.phonenumber || '',
+        isAdmin: false,
+      };
+      userData.push(user);
+      return user;
     },
   },
 
