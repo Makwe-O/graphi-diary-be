@@ -1,91 +1,43 @@
 import { v4 as uuidv4 } from 'uuid';
-let userData = [
-  {
-    id: '234',
-    firstname: 'Mmakwe',
-    lastname: 'Onyeka',
-    username: 'notmaks',
-    email: 'mmakeonyeka@gmail.com',
-    isAdmin: true,
-    phonenumber: '08034553555',
-  },
-  {
-    id: '2344',
-    firstname: 'Bolanle',
-    lastname: 'Banks',
-    username: 'beatice33',
-    email: 'banks@hotmail.com',
-    isAdmin: true,
-    phonenumber: '07094375899',
-  },
-];
-
-let incidentData = [
-  {
-    id: '112',
-    createdAt: '23-33-22',
-    createdBy: '234',
-    type: 'INCIDENT',
-    location: 'lagos',
-    status: 'PENDING',
-    comment: 'It was lit',
-  },
-  {
-    id: '113',
-    createdAt: '23-33-21',
-    createdBy: '234',
-    type: 'INCIDENT',
-    location: 'lagos',
-    status: 'PENDING',
-    comment: 'Thing thing go skrreee',
-  },
-  {
-    id: '114',
-    createdAt: '24-33-21',
-    createdBy: '234',
-    type: 'INCIDENT',
-    location: 'lagos',
-    status: 'PENDING',
-    comment: 'She belongs to the streets',
-  },
-];
 
 const resolvers = {
   Query: {
-    users: (parent, args, context, info) => {
+    users: (parent, args, { db }, info) => {
       if (!args.query) {
-        return userData;
+        return db.userData;
       }
-      return userData.filter((user) =>
+      return db.userData.filter((user) =>
         user.username
           .toLocaleLowerCase()
           .includes(args.query.toLocaleLowerCase()),
       );
     },
-    user(parent, args, context, info) {
-      const result = userData.find((user) => user.username === args.username);
+    user(parent, args, { db }, info) {
+      const result = db.userData.find(
+        (user) => user.username === args.username,
+      );
       if (result) {
         return result;
       }
     },
 
-    incidents: (parent, args, context, info) => {
+    incidents: (parent, args, { db }, info) => {
       if (!args.query) {
-        return incidentData;
+        return db.incidentData;
       }
-      return incidentData.filter((incident) =>
+      return db.incidentData.filter((incident) =>
         incident.comment
           .toLocaleLowerCase()
           .includes(args.query.toLocaleLowerCase()),
       );
     },
-    incident: (parent, args, context, info) => {
-      return incidentData.find((incident) => incident.id === args.id);
+    incident: (parent, args, { db }, info) => {
+      return db.incidentData.find((incident) => incident.id === args.id);
     },
   },
   Mutation: {
-    createUser: (parent, args, context, info) => {
-      const isEmailTaken = userData.some(
+    createUser: (parent, args, { db }, info) => {
+      const isEmailTaken = db.userData.some(
         (user) => user.email === args.data.email,
       );
       console.log(isEmailTaken);
@@ -97,53 +49,53 @@ const resolvers = {
         isAdmin: false,
         ...args.data,
       };
-      userData.push(user);
+      db.userData.push(user);
       return user;
     },
 
-    deleteUser: (parent, args, ctx, info) => {
-      const isUserExist = userData.find((user) => user.id === args.id);
+    deleteUser: (parent, args, { db }, info) => {
+      const isUserExist = db.userData.find((user) => user.id === args.id);
       if (!isUserExist) {
         throw new Error('User not found');
       }
-      const updateUserData = userData.filter((user) => user.id !== args.id);
-      userData = updateUserData;
-      return userData;
+      const updateUserData = db.userData.filter((user) => user.id !== args.id);
+      db.userData = updateUserData;
+      return db.userData;
     },
 
-    createIncident: (parent, args, ctx, info) => {
+    createIncident: (parent, args, { db }, info) => {
       const incident = {
         id: uuidv4(),
         ...args.data,
       };
-      incidentData.push(incident);
+      db.incidentData.push(incident);
       return incident;
     },
 
-    deleteIncident: (parent, args, ctx, info) => {
-      const isIncidentexist = incidentData.find(
+    deleteIncident: (parent, args, { db }, info) => {
+      const isIncidentexist = db.incidentData.find(
         (incident) => incident.id === args.id,
       );
       if (!isIncidentexist) {
         throw new Error('This incident does not exist');
       }
-      const updateIncidentData = incidentData.filter(
+      const updateIncidentData = db.incidentData.filter(
         (incident) => incident.id !== args.id,
       );
-      incidentData = updateIncidentData;
-      return incidentData;
+      db.incidentData = updateIncidentData;
+      return db.incidentData;
     },
   },
 
   Incident: {
-    createdBy: (parent, args, context, info) => {
-      return userData.find((user) => user.id === parent.createdBy);
+    createdBy: (parent, args, { db }, info) => {
+      return db.userData.find((user) => user.id === parent.createdBy);
     },
   },
 
   User: {
-    incidents: (parent, args, context, info) => {
-      return incidentData.filter(
+    incidents: (parent, args, { db }, info) => {
+      return db.incidentData.filter(
         (incident) => incident.createdBy === parent.id,
       );
     },

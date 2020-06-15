@@ -39,6 +39,7 @@
 
 import { ApolloServer } from 'apollo-server';
 import { makeExecutableSchema } from 'graphql-tools';
+import db from './src/models/data';
 import typeDefs from './src/typedefs';
 import resolvers from './src/resolvers';
 
@@ -47,7 +48,12 @@ const schema = makeExecutableSchema({
   resolvers,
 });
 
-const server = new ApolloServer({ schema });
+const server = new ApolloServer({
+  schema,
+  context: {
+    db,
+  },
+});
 
 server.listen().then(({ url }) => {
   console.log(`Server listening at ${url}`);
