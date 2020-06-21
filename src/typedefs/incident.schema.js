@@ -32,6 +32,11 @@ const Incident = gql`
     deleteIncident(id: ID!): [Incident]!
     updateIncident(id: ID!, data: UpdateIncidentInput): Incident!
   }
+
+  extend type Subscription {
+    newIncident(userId: ID!): Incident!
+  }
+
   input CreateIncidentInput {
     type: String!
     status: String!

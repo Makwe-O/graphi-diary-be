@@ -40,12 +40,15 @@ const Mutation = {
     return userExist;
   },
 
-  createIncident: (parent, args, { db }, info) => {
+  createIncident: (parent, args, { db, pubsub }, info) => {
     const incident = {
       id: uuidv4(),
       ...args.data,
     };
     db.incidentData.push(incident);
+    pubsub.publish(`NEW_INCIDENT_${args.data.createdBy}`, {
+      newIncident: incident,
+    });
     return incident;
   },
 

@@ -37,12 +37,13 @@
 
 // export default app;
 
-import { ApolloServer } from 'apollo-server';
+import { ApolloServer, PubSub } from 'apollo-server';
 import { makeExecutableSchema } from 'graphql-tools';
 import db from './src/models/data';
 import typeDefs from './src/typedefs';
 import resolvers from './src/resolvers';
 
+const pubsub = new PubSub();
 const schema = makeExecutableSchema({
   typeDefs,
   resolvers,
@@ -52,6 +53,7 @@ const server = new ApolloServer({
   schema,
   context: {
     db,
+    pubsub,
   },
 });
 
