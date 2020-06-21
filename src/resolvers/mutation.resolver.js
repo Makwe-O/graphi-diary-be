@@ -28,6 +28,18 @@ const Mutation = {
     return db.userData;
   },
 
+  updateUser: (parent, args, { db }, info) => {
+    const { id, data } = args;
+    const userExist = db.userData.find((user) => user.id === id);
+    if (!userExist) {
+      throw new Error('User not found');
+    }
+    userExist.firstname = data.firstname || userExist.firstname;
+    userExist.lastname = args.data.lastname || userExist.lastname;
+    userExist.phonenumber = args.data.phonenumber || userExist.phonenumber;
+    return userExist;
+  },
+
   createIncident: (parent, args, { db }, info) => {
     const incident = {
       id: uuidv4(),
