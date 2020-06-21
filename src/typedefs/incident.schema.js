@@ -30,6 +30,7 @@ const Incident = gql`
   extend type Mutation {
     createIncident(data: CreateIncidentInput): Incident!
     deleteIncident(id: ID!): [Incident]!
+    updateIncident(id: ID!, data: UpdateIncidentInput): Incident!
   }
   input CreateIncidentInput {
     type: String!
@@ -38,6 +39,11 @@ const Incident = gql`
     createdBy: ID!
     location: String
     createdAt: String!
+  }
+  input UpdateIncidentInput {
+    comment: String
+    location: String
+    createdAt: String
   }
 `;
 

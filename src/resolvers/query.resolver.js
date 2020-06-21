@@ -14,6 +14,7 @@ const Query = {
     if (result) {
       return result;
     }
+    return null;
   },
 
   incidents: (parent, args, { db }, info) => {
