@@ -13,6 +13,11 @@ const Incident = gql`
     REJECTED
   }
 
+  enum MutationType {
+    CREATED
+    DELETED
+  }
+
   type Incident {
     id: ID!
     createdAt: String!
@@ -24,7 +29,7 @@ const Incident = gql`
   }
 
   type IncidentSubscriptionPayload {
-    message: String!
+    message: MutationType!
     data: Incident!
   }
 

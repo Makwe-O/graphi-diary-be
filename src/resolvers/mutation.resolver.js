@@ -48,7 +48,7 @@ const Mutation = {
     db.incidentData.push(incident);
     pubsub.publish(`NEW_INCIDENT_${args.data.createdBy}`, {
       newIncident: {
-        message: 'Incident created successfully',
+        message: 'CREATED',
         data: incident,
       },
     });
@@ -67,7 +67,7 @@ const Mutation = {
     );
     pubsub.publish(`DELETED_INCIDENT_${isIncidentexist.createdBy}`, {
       deletedIncident: {
-        message: `Incident with id ${isIncidentexist.id} deleted successfully`,
+        message: 'DELETED',
         data: isIncidentexist,
       },
     });
