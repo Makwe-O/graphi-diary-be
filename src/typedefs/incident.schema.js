@@ -23,6 +23,11 @@ const Incident = gql`
     comment: String!
   }
 
+  type IncidentSubscriptionPayload {
+    message: String!
+    data: Incident!
+  }
+
   extend type Query {
     incidents(query: String): [Incident]!
     incident(id: ID!): Incident!
@@ -33,8 +38,9 @@ const Incident = gql`
     updateIncident(id: ID!, data: UpdateIncidentInput): Incident!
   }
 
-  extend type Subscription {
-    newIncident(userId: ID!): Incident!
+  type Subscription {
+    newIncident(userId: ID!): IncidentSubscriptionPayload!
+    deletedIncident(userId: ID!): IncidentSubscriptionPayload!
   }
 
   input CreateIncidentInput {

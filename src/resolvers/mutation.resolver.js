@@ -47,12 +47,15 @@ const Mutation = {
     };
     db.incidentData.push(incident);
     pubsub.publish(`NEW_INCIDENT_${args.data.createdBy}`, {
-      newIncident: incident,
+      newIncident: {
+        message: 'Incident created successfully',
+        data: incident,
+      },
     });
     return incident;
   },
 
-  deleteIncident: (parent, args, { db }, info) => {
+  deleteIncident: (parent, args, { db, pubsub }, info) => {
     const isIncidentexist = db.incidentData.find(
       (incident) => incident.id === args.id,
     );
@@ -62,6 +65,12 @@ const Mutation = {
     const updateIncidentData = db.incidentData.filter(
       (incident) => incident.id !== args.id,
     );
+    pubsub.publish(`DELETED_INCIDENT_${isIncidentexist.createdBy}`, {
+      deletedIncident: {
+        message: `Incident with id ${isIncidentexist.id} deleted successfully`,
+        data: isIncidentexist,
+      },
+    });
     // eslint-disable-next-line no-param-reassign
     db.incidentData = updateIncidentData;
     return db.incidentData;

@@ -23,10 +23,6 @@ const User = gql`
     updateUser(id: ID!, data: UpdateUserInput): User!
   }
 
-  type Subscription {
-    count: Int!
-  }
-
   input CreateUserInput {
     firstname: String!
     lastname: String!

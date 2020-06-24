@@ -1,4 +1,4 @@
-let userData = [
+const userData = [
   {
     id: '234',
     firstname: 'Mmakwe',
@@ -19,7 +19,7 @@ let userData = [
   },
 ];
 
-let incidentData = [
+const incidentData = [
   {
     id: '112',
     createdAt: '23-33-22',
