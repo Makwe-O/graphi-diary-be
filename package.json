@@ -33,7 +33,7 @@
     "express": "^4.17.1",
     "graphql": "^15.0.0",
     "graphql-tools": "^6.0.8",
-    "mocha": "^7.0.1",
+    "mocha": "^10.2.0",
     "mongoose": "^5.7.13",
     "nodemon": "^2.0.1",
     "uuid": "^8.1.0"
